@@ -1,0 +1,15 @@
+.data 
+	iter:.word 1 ## the first value of the array
+	end:.word 50  ## the end value of the array
+	addr:.word 0x10010060  ## the starting adress
+.text
+	lw $s0, addr
+	lw $t0, end ## to is the index and will jump 4 bits any time
+	lw $s1 , iter # The first number to insert
+Loop:
+	sw $s1, 0($s0) #Insert on s0 place the value of $s1
+	addi $s1, $s1, 4 ## The next value in the array = value + 4
+	addi $s0,$s0, 4	  ## The next memory place is in + 4 bytes
+	blt  $s1, $t0, Loop ## If the current value is less then the last value -> Loop again
+	
+End: ## else we finish
